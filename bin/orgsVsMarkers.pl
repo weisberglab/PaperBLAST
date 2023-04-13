@@ -51,11 +51,11 @@ my @orgs = ReadTable("$orgsPre.org", qw{orgId gdb gid genomeName});
 die "No organisms in $orgsPre.org\n" unless @orgs > 0;
 my %orgs = map { $_->{orgId} => $_ } @orgs;
 
-my $usearch = "$Bin/usearch";
-die "No such executable: $usearch\n" unless -x $usearch;
+#my $usearch = "$Bin/usearch";
+#die "No such executable: $usearch\n" unless -x $usearch;
 
 my $tmpFile = "$outFile.$$.tmp";
-my @cmd = ($usearch, "-usearch_global", $orgsFaa, "-db", $markerFaa,
+my @cmd = ("usearch", "-usearch_global", $orgsFaa, "-db", $markerFaa,
            "-id", $minIdentity/100, "-maxaccepts", 20, "-maxrejects", 20,
            "-query_cov", 0.7, "-target_cov", 0.7, "-blast6out", $tmpFile,
            "-threads", $nCPU, "--quiet");

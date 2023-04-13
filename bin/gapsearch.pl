@@ -61,11 +61,11 @@ END
   die "maxWeak must be positive\n" unless $maxWeak > 0;
 
   my $binDir = $RealBin;
-  my $hmmsearch = "$binDir/hmmsearch";
-  my $usearch = "$binDir/usearch";
-  foreach my $b ($hmmsearch, $usearch) {
-    die "No such file or not executable: $b\n" unless -x $b;
-  }
+  #my $hmmsearch = "$binDir/hmmsearch";
+  #my $usearch = "$binDir/usearch";
+  #foreach my $b ($hmmsearch, $usearch) {
+  #  die "No such file or not executable: $b\n" unless -x $b;
+  #}
   foreach my $suffix (qw{org faa}) {
     die "No such file: $orgprefix.$suffix\n" unless -e "$orgprefix.$suffix";
   }
@@ -134,7 +134,7 @@ END
     $hmmTmp{$hmmId} = $tmpfile;
     if (fork() == 0) {
       # the child process
-      my @cmd = ($hmmsearch, "--cut_tc", "-o", "/dev/null", "--domtblout", $tmpfile, $hmmFileName, $aaIn);
+      my @cmd = ("hmmsearch", "--cut_tc", "-o", "/dev/null", "--domtblout", $tmpfile, $hmmFileName, $aaIn);
       print STDERR "Running $hmmId\n" if defined $verbose;
       system(@cmd) == 0 || die "$@cmd failed: $!";
       print STDERR "$hmmId finished\n" if defined $verbose;
@@ -174,7 +174,7 @@ END
   }
   close($fhC) || die "Error writing to $cfile\n";
   my $cmd = join(" ",
-                 $usearch, "-ublast", $cfile, "-db", $aaIn,
+                 "usearch", "-ublast", $cfile, "-db", $aaIn,
                  "-evalue", 0.01, "-id", 0.3,
                  "-blast6out", "$cfile.hits",
                  "-threads", $nCPU);

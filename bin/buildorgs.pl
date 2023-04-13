@@ -75,10 +75,10 @@ if (defined $orgfile) {
 
 SetFitnessBrowserPath($febadata);
 SetPrivDir($privdir);
-my $blastdir = "$Bin/blast";
-die "No such directory: $blastdir\n" unless -d $blastdir;
-my $formatdb = "$blastdir/formatdb";
-die "No such executable: $formatdb\n" unless -x $formatdb;
+#my $blastdir = "$Bin/blast";
+#die "No such directory: $blastdir\n" unless -d $blastdir;
+#my $formatdb = "$blastdir/formatdb";
+#die "No such executable: $formatdb\n" unless -x $formatdb;
 
 # Fetch the assemblies
 FetchAssembly::setFailMode("warning");
@@ -139,8 +139,8 @@ close($fhOut) || die "Error writing to $prefix.faa\n";
 print STDERR "Wrote $prefix.faa\n";
 
 # Index $prefix.faa
-system($formatdb, "-p", "T", "-i", "$prefix.faa", "-o", "T") == 0
-  || die "$formatdb on $prefix.faa failed: $!\n";
+system("formatdb", "-p", "T", "-i", "$prefix.faa", "-o", "T") == 0
+  || die "formatdb on $prefix.faa failed: $!\n";
 
 open(my $fhOrg, ">", "$prefix.org")
   || die "Cannot write to $prefix.org\n";
