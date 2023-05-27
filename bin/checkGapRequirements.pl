@@ -27,13 +27,13 @@ my ($orgDir,$stepsDb,$outFile);
 die $usage
   unless GetOptions('set=s' => \$set,
                     'org=s' => \$orgDir,
-                    'stepsDb' => \$stepsDb,
+                    'stepsDb=s' => \$stepsDb,
                     'results=s' => \$resultsDir,
                     'out=s' => \$outFile)
   && @ARGV == 0
   && defined $outFile;
 die "No organism directory specified\n" unless defined $orgDir;
-$stepsDb = "$resultsDir/path.$set/steps.db";
+$stepsDb = "$resultsDir/path.$set/steps.db" unless defined $stepsDb;
 foreach my $dir ($resultsDir, "$resultsDir/$orgDir") {
   die "No such directory: $dir\n"
     unless -d $dir;
